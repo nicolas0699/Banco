@@ -4,17 +4,20 @@
 #include "datos.hpp"
 using namespace std;
 
-
+//Función que permite poner en mayusculas la informacion para asi evitar problemas a la hora de buscala
 string Datos::mayusculas(string cadena){
     for(int i=0; i< cadena.size(); i++)
         cadena[i] = toupper(cadena[i]);
     return cadena;
 }
 
+//retorna el tamaño de la base de datos
 int Datos::tamano(){
     return count;
 }
 
+
+//inserta la informacón corerspondiente de cada donante 
 void Datos::insertar(string ident, string nom1, string nom2, string ape1, string ape2, string nac, string sexo, string rh, double dist){
     int id=0;
     Info * informacion = new Info;
@@ -52,6 +55,8 @@ void Datos::insertar(string ident, string nom1, string nom2, string ape1, string
     }
 }
 
+
+# Realiza un display de la información para que pueda verla el usuario 
 void Datos::ver_pacientes(){
     cout << "identificacion" << "   " <<  "primer nombre" << "   " << "segundo nombre" << "   " << "primer apellido" << "   " << "segundo apellido" << "   " << "fecha nacimiento" << "   " << "sexo"<< "   " <<  "rh" << "   " <<  "distancia" << endl;
     Info *x = paciente;
