@@ -35,10 +35,10 @@ int main(){
     x.insertar("108345980", "adrian", "german", "pimiento", "ratoeez", "21/11/1976", "m", "o-", 120);
     ofstream in("DataBase.txt",ios::app);
     if(in.good()){
-      in<<"Identificacion" << "   " <<  "Primer_nombre" << "   " << "Segundo_nombre" << "   " << "Primer_apellido" << "   " << "Segundo_apellido" << "   " << "Fecha_nacimiento" << "   " << "Sexo"<< "   " <<  "RH" << "   " <<  "Distancia" <<'\n';
-      in<<"================================================================================================================================="<<'\n';
-      for(int i=0;i<x.tamano();++i){
-        in<<x.search_info(i)<<'\n';
+      in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" << setw(15) << left <<  "Distancia" <<  '\n';
+      in<<"=================================================================================================================================================="<<'\n';
+      for(int i=1;i <= x.tamano();++i){
+        in<<setw(15) << left << i << setw(15) << left << x.get_ident(i) << setw(15) << left << x.get_nom1(i) << setw(15) << left << x.get_nom2(i) << setw(15) << left << x.get_apel1(i) << setw(15) << left << x.get_apel2(i) << setw(15) << left << x.get_nac(i) << setw(15) << left << x.get_sexo(i) << setw(15) << left << x.get_rh(i) << setw(15) << left << x.get_dist(i) << "\n";
       }
     }
     in.close();
