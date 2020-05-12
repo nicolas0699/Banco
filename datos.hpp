@@ -31,7 +31,16 @@ public:
     Datos(){paciente=nullptr, count = 0;}
     int tamano();
     void eliminar();
-    Info encontrar();
+    Info * encontrar(int i);
+    string get_ident(int i);
+    string get_nom1(int i);
+    string get_nom2(int i);
+    string get_apel1(int i);
+    string get_apel2(int i);
+    string get_nac(int i);
+    string get_sexo(int i);
+    string get_rh(int i);
+    double get_dist(int i);
     void insertar(string ident, string nom1, string nom2, string ape1, string ape2, string nac, string sexo, string rh, double dist);
     void ver_pacientes();
 };
