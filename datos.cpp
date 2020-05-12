@@ -121,6 +121,3 @@ void Datos::ver_pacientes(){
         cout << setw(15) << left << i << setw(15) << left << get_ident(i) << setw(15) << left << get_nom1(i) << setw(15) << left << get_nom2(i) << setw(15) << left << get_apel1(i) << setw(15) << left << get_apel2(i) << setw(15) << left << get_nac(i) << setw(15) << left << get_sexo(i) << setw(15) << left << get_rh(i) << setw(15) << left << get_dist(i) << "\n"; 
     } 
 }
-
-
-
