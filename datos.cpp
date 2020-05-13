@@ -8,6 +8,16 @@ using namespace std;
 
 int  idd=0;
 
+Datos::~Datos(){
+    while(count == 0){
+        Info * temp = paciente;
+        paciente = paciente->next;
+        delete temp;
+        count --;
+    }
+}
+
+
 string Datos::mayusculas(string cadena){
     for(int i=0; i< cadena.size(); i++)
         cadena[i] = toupper(cadena[i]);
