@@ -233,3 +233,4 @@ void Datos::busqueda(string R){
       cout<<setw(15) << left << bod[i]->nombre1<< setw(15) << left<<bod[i]->apellido1<< setw(15) << left<< bod[i]->telefono << bod[i]->distancia<<'\n';
 }
 
+
