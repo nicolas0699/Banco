@@ -32,7 +32,6 @@ void Datos::insertar(string ident, string nom1, string nom2, string ape1, string
         informacion->sexo=mayusculas(sexo);
         informacion->rh=mayusculas(rh);
         informacion->distancia=dist;
-        informacion->back=paciente;
         informacion->next=nullptr;
         paciente = informacion;
         count ++;
@@ -52,7 +51,6 @@ void Datos::insertar(string ident, string nom1, string nom2, string ape1, string
         informacion->distancia=dist;
         informacion->next = paciente;
         paciente = informacion;
-        informacion->back = paciente;
         count ++;
         idd = informacion->id;
     }
