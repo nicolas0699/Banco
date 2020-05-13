@@ -61,6 +61,4 @@ public:
     void ver_pacientes();
     void busqueda(string R);
 };
-
-
 #endif
