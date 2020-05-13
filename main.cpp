@@ -8,13 +8,13 @@
 using namespace std;
 
 
+/*Esta función lee la cadena que se le ingrese y la separa por sus respectivas palabras, por lo que los espacios quedan eliminados y cada dato es guardado en un arreglo eel cuál se utiliza para poder insertar en la estructura los pacientes que ya exisitian en el archivo txt*/
+
 Datos in_datos(string str, Datos x){
     string arr [11]; 
     int i = 0;
-    // Used to split string around spaces. 
     istringstream ss(str); 
   
-    // Traverse through all words 
     for(int i = 0; i < 11; i++){
         string word;
         ss >> word;
@@ -42,6 +42,8 @@ int main(){
     getline(out, y);
     getline(out, y);
 
+
+    /*Esta parte de aqui es porque estaba sucediendo un error al llegar a la ultima linea del archivo porque era una linea que no tenia contenido, entonces lo que hace al llegar a la ultima linea es salir del while y antes de eso emplea la función para insertar los datos que estaban en el archivo.*/
     do{
         getline(out, y);
         if(out.eof())
@@ -53,6 +55,7 @@ int main(){
     x.ver_pacientes();
     out.close();
 
+    /*Aqui es importante que el archivo de texto se encuentre totalmente en blanco. Esto creará el nombre de las columnas en la base de datos del txt. No he podido solucionar que cuando  no se ingresa ningun paciente la primera vez, luego no se cree otra vez esta parte, por lo que si lo pueden solucionar estaria muy bien. Sin embargo, cuando se ingresa el primer paciente a la primera, de ahi en adelante no generará ningún error.*/
     ofstream in("datos.txt",ios::app);
         if(x.tamano()==0){
             in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
@@ -60,6 +63,8 @@ int main(){
         }
     in.close();
     
+
+    /*Aqui es donde es importante que si es la primera vez que se abre el archivo, es decir es un archivo totalmente en blanco, se ingrese un paciente para que funcione el programa, despues ya no habrá ningun lio en ingresar o ir a las otras 2 opciones*/
     int g;
 
     cout << "introduzca 1 para agregar un paciente" << "\n2 para información de RH" << "\n3 para cambiar el dato de algun paciente\n";
@@ -118,6 +123,7 @@ int main(){
         in.close();
     }
 
+    /*Con los algoritmos que realizo Andrés, esta parte nos dirá cuales son las personas que mas cerca se encuentran al hospital con el tipo de sangre que ingrese el usuario*/
     string sangre;
     if(g ==2){
         cout << "Diga que RH necesita: ";
@@ -125,11 +131,47 @@ int main(){
         x.busqueda(mayusculas(sangre));
     }    
 
-    cout << x.get_nom1(2) << endl;
+    
+    if(g == 3){
 
-    x.set_nom1(2, "pepito");
+        /*Esta parte del codigo modifica algún dato que pueda estar erroneo, aqui por simplicidad lo hice unicamente para el primer paciente, pero tambien se le podria solicitar al usuario cual paciente desea modificar pidiendole La ID del paciente y claramente se deberia preguntar al usuario por cual es el valor(string o double) que desea que se modifique. No desarrolle todo porque se va a cambiar el menú. Sin embargo, de esta forma se modificaria el archivo de texto.*/
 
-    cout << x.get_nom1(2) << endl;
+        int count;
+        cout << "1->Identificacion\n2->Nombre1\n3->Nombre2\n4->Apellido1\n5->Apellido2\n6->Nacimiento\n7->telefono\n8->sexo\n9->RH\n10->Distancia\n";
+        cin >> count;
+        if(count == 2)
+            x.set_nom1(1, "Nico");
+
+        if(count == 3)
+            x.set_nom2(1, "Alex");
+
+        if(count == 4)
+            x.set_apel1(1, "trujillo");
+
+        /* Cada vez que entre a este if, el archvio de texto debe modificarse, pues es la base de datos. El codigo que esta debajo de este comentario crea un archivo temporal para poder hacer la copia y modificar el archivo con los cambios realizados*/
+
+        ifstream fs("datos.txt");
+        ofstream fstemp("datostemp.txt");
+
+        string line;
+
+        getline(fs, line);
+        fstemp << line << endl;
+        getline(fs, line);
+        fstemp << line << endl;
+
+        if(x.tamano() != 0){
+            for(int i =1; i <= x.tamano(); i++){
+                if(fstemp.good()){
+                    fstemp << setw(15) << left << i << setw(15) << left << x.get_ident(i) << setw(15) << left << x.get_nom1(i) << setw(15) << left << x.get_nom2(i) << setw(15) << left << x.get_apel1(i) << setw(15) << left << x.get_apel2(i) << setw(15) << left << x.get_nac(i) << setw(15) << left <<x.get_tel(i) << setw(15) << left << x.get_sexo(i) << setw(15) << left << x.get_rh(i)  << x.get_dist(i) << "\n";
+                }
+            }
+        }
+        fs.close();
+        fstemp.close();
+        remove("datos.txt");
+        rename("datostemp.txt", "datos.txt");
+    }
     
     return 0;
 }
