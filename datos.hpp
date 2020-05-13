@@ -34,6 +34,7 @@ private:
     void quicksort(vector<Info*>& v);
 public:
     Datos(){paciente=nullptr, count = 0;}
+    ~Datos();
     int tamano();
     void eliminar();
     Info * encontrar(int i);
