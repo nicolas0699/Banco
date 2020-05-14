@@ -69,7 +69,7 @@ BNode* HashBlood::search_bucket(int i,string key){
   return nullptr;
 }
 
-void HashBlood::insert(string key,int value){
+void HashBlood::insert(string key,int value, int tipo){
   int ind=hash_blood(key);
   BNode* selec=search_bucket(ind,key);
   if(selec==nullptr){
@@ -82,7 +82,10 @@ void HashBlood::insert(string key,int value){
       count +=1;
   }
   else{
-    selec->cant=value;
+    if(tipo == 0)
+      selec->cant=selec->cant+value;
+    else if(tipo == 1)
+      selec->cant = value;
   }
 }
 
