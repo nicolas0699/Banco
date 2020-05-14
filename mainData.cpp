@@ -86,23 +86,23 @@ despues se comenta y se corre el programa para que actualice los valores en el m
 
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
 //COMENTAR DESPUES DE LA PRIMERA VEZ!!!!!!!!!!!
-  vector<string> TS{"O-","O+","A-","A+","B-","B+","AB-","AB+"};
-  vector<int> cant{120,320,450,65,124,231,432,43};
-  ofstream inss("cant_tipo.txt",ios::app);
-  if(inss.good()){
-    for(int i=0;i<TS.size();++i){
-      inss<<TS[i]<<" "<<cant[i]<<'\n';
-    }
-  }
-  inss.close();
+  // vector<string> TS{"O-","O+","A-","A+","B-","B+","AB-","AB+"};
+  // vector<int> cant{120,320,450,65,124,231,432,43};
+  // ofstream inss("cant_tipo.txt",ios::app);
+  // if(inss.good()){
+  //   for(int i=0;i<TS.size();++i){
+  //     inss<<TS[i]<<" "<<cant[i]<<'\n';
+  //   }
+  // }
+  // inss.close();
 
     //Aqui es importante que el archivo de texto se encuentre totalmente en blanco. Esto creará el nombre de las columnas en la base de datos del txt. No he podido solucionar que cuando  no se ingresa ningun paciente la primera vez, luego no se cree otra vez esta parte, por lo que si lo pueden solucionar estaria muy bien. Sin embargo, cuando se ingresa el primer paciente a la primera, de ahi en adelante no generará ningún error.
-    ofstream in("datos.txt",ios::app);
-        if(x.tamano()==0){
-            in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
-            in<<"==============================================================================================================================================================="<<'\n';
-        }
-    in.close();
+    // ofstream in("datos.txt",ios::app);
+    //     if(x.tamano()==0){
+    //         in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
+    //         in<<"==============================================================================================================================================================="<<'\n';
+    //     }
+    // in.close();
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
     ifstream out("datos.txt");
     int i = 0;
@@ -185,7 +185,37 @@ despues se comenta y se corre el programa para que actualice los valores en el m
                   in<<setw(15) << left << x.tamano() << setw(15) << left << x.get_ident(x.tamano()) << setw(15) << left << x.get_nom1(x.tamano()) << setw(15) << left << x.get_nom2(x.tamano()) << setw(15) << left << x.get_apel1(x.tamano()) << setw(15) << left << x.get_apel2(x.tamano()) << setw(15) << left << x.get_nac(x.tamano()) << setw(15) << left <<x.get_tel(x.tamano()) << setw(15) << left << x.get_sexo(x.tamano()) << setw(15) << left << x.get_rh(x.tamano())  << x.get_dist(x.tamano()) << "\n";
               }
               in.close();
+
+              /*Nueva actualizacion 14/06/2020*/
+              /*Al ingresar un  paciente, toma su RH y aumenta el inventario de ese RH en 1*/
+              HashBlood bodega;
+              vector<string> intr;
+              ifstream in1("cant_tipo.txt");
+              string line="";
+              if(in1.good()){
+                while(!in1.eof()){
+                  getline(in1,line);
+                  intr.push_back(line);
+                }
+              }
+              in1.close();
+              for(int i=0;i<intr.size()-1;i++){
+                vector<string> save=split(intr[i]," ");
+                 bodega.insert(save[0],stoi(save[1]), 1);
+              }
+            bodega.insert(x.get_rh(x.tamano()), 1, 0);
+
+            /*Modifica el archivo de texto con los cambios*/
+            ofstream of("cant_tipo.txt",ios::trunc);
+            if(of.good()){
+              for(int i=0;i<8;++i){
+                of<<bodega.info(i)<<'\n';
+              }
+            }
+          of.close();
           }
+
+
           if(g2 == 2){
 
               /*Esta parte del codigo modifica algún dato que pueda estar erroneo, aqui por simplicidad lo hice unicamente para el primer paciente, pero tambien se le podria solicitar al usuario cual paciente desea modificar pidiendole La ID del paciente y claramente se deberia preguntar al usuario por cual es el valor(string o double) que desea que se modifique. No desarrolle todo porque se va a cambiar el menú. Sin embargo, de esta forma se modificaria el archivo de texto.*/
@@ -247,7 +277,7 @@ despues se comenta y se corre el programa para que actualice los valores en el m
         in1.close();
         for(int i=0;i<intr.size()-1;i++){
           vector<string> save=split(intr[i]," ");
-          bodega.insert(save[0],stoi(save[1]));
+          bodega.insert(save[0],stoi(save[1]), 1);
         }
         string g3;
         bool t3=true;
@@ -265,7 +295,7 @@ despues se comenta y se corre el programa para que actualice los valores en el m
           vector<string> ll=split(info2,",");
           if(stoi(ll[1])>bodega.get_blood(ll[0])){
             cout<<"Lo siento! pero hacen falta "<<stoi(ll[1])-bodega.get_blood(ll[0])<<" litros por entregar"<<'\n';
-            bodega.insert(ll[0],0);
+            bodega.insert(ll[0],0, 1);
             cout<<"PILAS!!! se acaba la sangre de tipo "<<ll[0]<<" estas personas podrian donar, contactese"<<'\n';
             x.busqueda(mayusculas(ll[0]));
           }
@@ -275,7 +305,7 @@ despues se comenta y se corre el programa para que actualice los valores en el m
               cout<<"PILAS!!! Se acaba la sangre de tipo "<<ll[0]<<" estas personas podrian donar, contactese"<<'\n';
               x.busqueda(mayusculas(ll[0]));
             }
-            bodega.insert(ll[0],dif);
+            bodega.insert(ll[0],dif,1);
           }
           //se escribe en el archivo de texto para actulizar los valores de cantidad de sangre
           ofstream of("cant_tipo.txt",ios::trunc);
