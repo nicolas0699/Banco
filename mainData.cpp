@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include "HashBlood.hpp"
+#include <fcntl.h>
 using namespace std;
 
 /*la funcion split() recibe una string (cad) y un delimitador (lim) y parte la
@@ -85,24 +86,28 @@ de los tipos de sangre y la cantidad que hay en en el banco, solo se debe correr
 despues se comenta y se corre el programa para que actualice los valores en el mismo archivo*/
 
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
-//COMENTAR DESPUES DE LA PRIMERA VEZ!!!!!!!!!!!
-  // vector<string> TS{"O-","O+","A-","A+","B-","B+","AB-","AB+"};
-  // vector<int> cant{120,320,450,65,124,231,432,43};
-  // ofstream inss("cant_tipo.txt",ios::app);
-  // if(inss.good()){
-  //   for(int i=0;i<TS.size();++i){
-  //     inss<<TS[i]<<" "<<cant[i]<<'\n';
-  //   }
-  // }
-  // inss.close();
+// Con el open ya no es necesario comentarlas, el programa puede correr sin problemas
+  int fd = open("cant_tipo.txt", O_RDONLY);
+  if(fd < 0){
+    vector<string> TS{"O-","O+","A-","A+","B-","B+","AB-","AB+"};
+    vector<int> cant{120,320,450,65,124,231,432,43};
+    ofstream inss("cant_tipo.txt",ios::app);
+    if(inss.good()){
+      for(int i=0;i<TS.size();++i){
+        inss<<TS[i]<<" "<<cant[i]<<'\n';
+      }
+    }
+    inss.close();
+  }
 
-    //Aqui es importante que el archivo de texto se encuentre totalmente en blanco. Esto creará el nombre de las columnas en la base de datos del txt. No he podido solucionar que cuando  no se ingresa ningun paciente la primera vez, luego no se cree otra vez esta parte, por lo que si lo pueden solucionar estaria muy bien. Sin embargo, cuando se ingresa el primer paciente a la primera, de ahi en adelante no generará ningún error.
-    // ofstream in("datos.txt",ios::app);
-    //     if(x.tamano()==0){
-    //         in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
-    //         in<<"==============================================================================================================================================================="<<'\n';
-    //     }
-    // in.close();
+  // Con el open ya no es necesario comentarlas, el programa puede correr sin problemas 
+  int fd1 = open("datos.txt", O_RDONLY);
+  if(fd < 0){
+      ofstream in("datos.txt",ios::app);
+      in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
+      in<<"==============================================================================================================================================================="<<'\n';
+      in.close();
+  }
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
     ifstream out("datos.txt");
     int i = 0;
@@ -330,3 +335,4 @@ despues se comenta y se corre el programa para que actualice los valores en el m
 
     return 0;
 }
+
