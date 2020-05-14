@@ -102,7 +102,7 @@ despues se comenta y se corre el programa para que actualice los valores en el m
 
   // Con el open ya no es necesario comentarlas, el programa puede correr sin problemas 
   int fd1 = open("datos.txt", O_RDONLY);
-  if(fd < 0){
+  if(fd1 < 0){
       ofstream in("datos.txt",ios::app);
       in << setw(15) <<left << "ID" << setw(15) << left << "identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" <<   "Distancia" <<  '\n';
       in<<"==============================================================================================================================================================="<<'\n';
