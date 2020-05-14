@@ -28,10 +28,11 @@ public:
   void clear();
   int size();
   bool empty();
-  void insert(string key,int value);
+  void insert(string key,int value, int tipo); // Puse el tipo para poder decidir donde sumar y donde reemplazar el valor, hasta hora funciona bien
   int get_blood(string key);
   void search(vector<string> V);
   string info(int i);
 };
 
 #endif
+
