@@ -182,14 +182,25 @@ despues se comenta y se corre el programa para que actualice los valores en el m
               cout << "Introduzca la distancia promedio en kilometros de su casa al hospital (ej: 6): ";
               cin >> dist;
 
-              ofstream in("datos.txt",ios::app);
-              if(in.good()){
-              x.insertar(ident, nom1, nom2, apellido1, apellido2, nacimiento, telefono, sexo, rh, dist);
+              //Desde aqui comienza la modificación
+              int id = 0;
+              for(int i = 1; i < x.tamano(); i++){
+                if(ident == x.get_ident(i))
+                  id = i;
               }
-              if(in.good()){
-                  in<<setw(15) << left << x.tamano() << setw(15) << left << x.get_ident(x.tamano()) << setw(15) << left << x.get_nom1(x.tamano()) << setw(15) << left << x.get_nom2(x.tamano()) << setw(15) << left << x.get_apel1(x.tamano()) << setw(15) << left << x.get_apel2(x.tamano()) << setw(15) << left << x.get_nac(x.tamano()) << setw(15) << left <<x.get_tel(x.tamano()) << setw(15) << left << x.get_sexo(x.tamano()) << setw(15) << left << x.get_rh(x.tamano())  << x.get_dist(x.tamano()) << "\n";
-              }
-              in.close();
+
+              
+              
+              if(id == 0){
+                ofstream in("datos.txt",ios::app);
+                if(in.good()){
+                x.insertar(ident, nom1, nom2, apellido1, apellido2, nacimiento, telefono, sexo, rh, dist);
+                }
+                if(in.good()){
+                    in<<setw(15) << left << x.tamano() << setw(15) << left << x.get_ident(x.tamano()) << setw(15) << left << x.get_nom1(x.tamano()) << setw(15) << left << x.get_nom2(x.tamano()) << setw(15) << left << x.get_apel1(x.tamano()) << setw(15) << left << x.get_apel2(x.tamano()) << setw(15) << left << x.get_nac(x.tamano()) << setw(15) << left <<x.get_tel(x.tamano()) << setw(15) << left << x.get_sexo(x.tamano()) << setw(15) << left << x.get_rh(x.tamano())  << x.get_dist(x.tamano()) << "\n";
+                }
+                in.close();
+              
 
               /*Nueva actualizacion 14/06/2020*/
               /*Al ingresar un  paciente, toma su RH y aumenta el inventario de ese RH en 1*/
@@ -218,8 +229,36 @@ despues se comenta y se corre el programa para que actualice los valores en el m
               }
             }
           of.close();
-          }
+          }else
+          {
+            HashBlood bodega;
+              vector<string> intr;
+              ifstream in1("cant_tipo.txt");
+              string line="";
+              if(in1.good()){
+                while(!in1.eof()){
+                  getline(in1,line);
+                  intr.push_back(line);
+                }
+              }
+              in1.close();
+              for(int i=0;i<intr.size()-1;i++){
+                vector<string> save=split(intr[i]," ");
+                 bodega.insert(save[0],stoi(save[1]), 1);
+              }
+            bodega.insert(x.get_rh(id), 1, 0);
 
+            /*Modifica el archivo de texto con los cambios*/
+            ofstream of("cant_tipo.txt",ios::trunc);
+            if(of.good()){
+              for(int i=0;i<8;++i){
+                of<<bodega.info(i)<<'\n';
+              }
+            }
+          of.close();
+          }
+          
+          }
 
           if(g2 == 2){
 
@@ -335,4 +374,3 @@ despues se comenta y se corre el programa para que actualice los valores en el m
 
     return 0;
 }
-
