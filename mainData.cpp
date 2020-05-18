@@ -134,7 +134,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
     bool t=true;
     while(t){
       cout<<"============================================="<<'\n';
-      cout << "Introduzca 1 para editar la base de datos" << "\n2 Si necesita sangre" <<"\n3 para salir"<<'\n';
+      cout << "Introduzca 1 para editar la base de datos" << "\n2 Si necesita sangre" <<"\n3 Para ver los donantes existentes" <<"\n4 Para salir"<<'\n';
       cin >> g;
       if(g == 1){
         int g2;
