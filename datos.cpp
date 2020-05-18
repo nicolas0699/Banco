@@ -17,17 +17,19 @@ Datos::~Datos(){
     }
 }
 
-
+/*El método mayusculas() recibe una cadena string y retorna la cadena en mayusculas*/
 string Datos::mayusculas(string cadena){
     for(int i=0; i< cadena.size(); i++)
         cadena[i] = toupper(cadena[i]);
     return cadena;
 }
 
+/*El metodo tamano() retorna el tamaño de la base de datos*/
 int Datos::tamano(){
     return count;
 }
 
+/*El método insertar() inserta la información del donante en una estructura tipo lista enlazada*/
 void Datos::insertar(string ident, string nom1, string nom2, string ape1, string ape2, string nac, string tel, string sexo, string rh, double dist){
     Info * informacion = new Info;
     if (paciente == nullptr){
@@ -66,6 +68,7 @@ void Datos::insertar(string ident, string nom1, string nom2, string ape1, string
     }
 }
 
+/*Los metodos get, permitiran obtener los atributos de cada paciente como la identidad. */
 
 
 string Datos::get_ident(int i){
@@ -117,6 +120,8 @@ double Datos::get_dist(int i){
     Info * temp = encontrar(i);
     return temp->distancia;
 }
+
+/*Los metodos set permitiran modificar los atributos de cada paciente*/
 
 void Datos::set_ident(int i, string val){
     Info * temp = encontrar(i);
@@ -189,7 +194,7 @@ Info* Datos::encontrar(int i){
     return nullptr;
 }
 
-
+/*El metodo ver_pacientes() hace un display de los donantes que se encuentran en la base de datos */
 
 void Datos::ver_pacientes(){
     cout << setw(15) <<left << "ID" << setw(15) << left << "Identificacion" << setw(15) << left <<   "Nombre1" << setw(15) << left << "Nombre2" << setw(15) << left << "Apellido1" << setw(15) << left << "Apellido2" << setw(15) << left << "Nacimiento" << setw(15) << left << "Telefono" << setw(15) << left << "Sexo"<< setw(15) << left <<  "RH" << setw(15) << left <<  "Distancia" << endl;
@@ -197,6 +202,8 @@ void Datos::ver_pacientes(){
         cout << setw(15) << left << i << setw(15) << left << get_ident(i) << setw(15) << left << get_nom1(i) << setw(15) << left << get_nom2(i) << setw(15) << left << get_apel1(i) << setw(15) << left << get_apel2(i) << setw(15) << left << get_nac(i) << setw(15) << left<< get_tel(i) << setw(15) << left << get_sexo(i) << setw(15) << left << get_rh(i) << setw(15) << left << get_dist(i) << "\n"; 
     } 
 }
+
+/*Se crea una adaptación del algoritmo quicksort que organiza los datos a partir del atributo distancia.*/
 
 int Datos::partition(vector<Info*>& v,int left,int right){
   int x=v[right-1]->distancia;
@@ -227,6 +234,9 @@ void Datos::quicksort(vector<Info*>& v){
     quikci(v,0,v.size());
 }
 
+/*El método busqueda() buscará a partir del rh, los pacientes que tengan el mismo
+e imprimira información relevante del mismo*/
+
 void Datos::busqueda(string R){
     vector<Info*> bod;
     Info *temp=paciente;
@@ -240,5 +250,7 @@ void Datos::busqueda(string R){
     for(int i=0;i<bod.size();++i)
       cout<<setw(15) << left << bod[i]->nombre1<< setw(15) << left<<bod[i]->apellido1<< setw(15) << left<< bod[i]->telefono << bod[i]->distancia<<'\n';
 }
+
+
 
 
