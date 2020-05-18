@@ -435,6 +435,18 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
         }
       }
       if(g==3){
+        bool t=true;
+        while(t){
+          x.ver_pacientes();
+          string ans1="";
+          cout<<"=============================="<<'\n';
+          cout<<"Para salir introduzca 3: ";
+          cin>>ans1;
+          if(ans1 == "3") t = false;
+        }
+      }
+
+      if(g==4){
         t=false;
       }
     }
