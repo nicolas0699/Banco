@@ -51,12 +51,11 @@ vector<string> match(string cad){
   }
   return matches;
 }
-/*la función in_datos() lee la cadena que se le ingrese y la separa por sus respectivas palabras, 
+/*la función in_datos() lee la cadena que se le ingrese y la separa por sus respectivas palabras,
 por lo que los espacios quedan eliminados y cada dato es guardado en un arreglo en el cuál
 se utiliza para poder insertar en la estructura los pacientes que ya exisitian en el archivo .txt*/
 Datos in_datos(string str, Datos x){
     string arr [11];
-    int i = 0;
     istringstream ss(str);
 
     for(int i = 0; i < 11; i++){
@@ -83,7 +82,7 @@ int main(){
     Datos x;
     string y;
 /*
-/*esta seccion del codigo crea los archivos de texto (cant_tipo.txt y datos.txt) donde se guardará la informacion
+esta seccion del codigo crea los archivos de texto (cant_tipo.txt y datos.txt) donde se guardará la informacion
 de los tipos de sangre y la cantidad que hay en en el banco.*/
 
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
@@ -96,7 +95,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
     vector<int> cant{120,320,450,65,124,231,432,43};
     ofstream inss("cant_tipo.txt",ios::app);
     if(inss.good()){
-      for(int i=0;i<TS.size();++i){
+      for(unsigned int i=0;i<TS.size();++i){
         inss<<TS[i]<<" "<<cant[i]<<'\n';
       }
     }
@@ -112,9 +111,8 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
   }
 //#################################################################################################################################################################################################################################################################################################################################################################################################################################################
 // Antes del menú, se introduce la información en el archivo .txt a la estructura que guarda la información del donante.
-  
+
     ifstream out("datos.txt");
-    int i = 0;
     getline(out, y);
     getline(out, y);
 
@@ -133,15 +131,17 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
     int g;
     bool t=true;
     while(t){
-      cout<<"============================================="<<'\n';
-      cout << "Introduzca 1 para editar la base de datos" << "\n2 Si necesita sangre" <<"\n3 Para ver los donantes existentes" <<"\n4 Para salir"<<'\n';
+      cout<<"======================================================================================="<<'\n';
+      cout << "Introduzca:\n1 para editar la base de datos" << "\n2 Si necesita sangre" <<"\n3 Para ver los donantes existentes" <<"\n4 Para salir"<<'\n';
+      cout<<"> ";
       cin >> g;
       if(g == 1){
         int g2;
         bool t2=true;
         while(t2){
-          cout<<"================================================="<<'\n';
-          cout<<"Introduzca 1 si quiere agregar una persona"<<"\n2 si desea corregir algun dato"<<'\n';
+          cout<<"======================================================================================="<<'\n';
+          cout<<"Introduzca:\n1 si quiere agregar una persona"<<"\n2 si desea corregir algun dato"<<'\n';
+          cout<<"> ";
           cin>>g2;
 
           //Se inserta un paciente a la estructura y luego se actualiza a la base de datos (datos.txt).
@@ -156,7 +156,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
               string sexo;
               string rh;
               double dist;
-
+              cout<<"======================================================================================="<<'\n';
               cout << "Introduzca el numero de identificacion: ";
               cin >> ident;
 
@@ -187,15 +187,15 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
               cout << "Introduzca la distancia promedio en kilometros de su casa al hospital (ej: 6): ";
               cin >> dist;
 
-              //Si la identidad ya existe, entonces no se ingresa 
+              //Si la identidad ya existe, entonces no se ingresa
               int id = 0;
               for(int i = 1; i < x.tamano(); i++){
                 if(ident == x.get_ident(i))
                   id = i;
               }
 
-              
-              
+
+
               if(id == 0){
                 ofstream in("datos.txt",ios::app);
                 if(in.good()){
@@ -205,7 +205,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
                     in<<setw(15) << left << x.tamano() << setw(15) << left << x.get_ident(x.tamano()) << setw(15) << left << x.get_nom1(x.tamano()) << setw(15) << left << x.get_nom2(x.tamano()) << setw(15) << left << x.get_apel1(x.tamano()) << setw(15) << left << x.get_apel2(x.tamano()) << setw(15) << left << x.get_nac(x.tamano()) << setw(15) << left <<x.get_tel(x.tamano()) << setw(15) << left << x.get_sexo(x.tamano()) << setw(15) << left << x.get_rh(x.tamano())  << x.get_dist(x.tamano()) << "\n";
                 }
                 in.close();
-              
+
 
               //Al ingresar un  paciente, toma su RH y aumenta el inventario de ese RH en 1
                 HashBlood bodega;
@@ -219,7 +219,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
                   }
                 }
                 in1.close();
-                for(int i=0;i<intr.size()-1;i++){
+                for(unsigned int i=0;i<intr.size()-1;i++){
                   vector<string> save=split(intr[i]," ");
                   bodega.insert(save[0],stoi(save[1]), 1);
                 }
@@ -247,7 +247,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
                   }
                 }
                 in1.close();
-                for(int i=0;i<intr.size()-1;i++){
+                for(unsigned int i=0;i<intr.size()-1;i++){
                   vector<string> save=split(intr[i]," ");
                   bodega.insert(save[0],stoi(save[1]), 1);
                 }
@@ -270,6 +270,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
             int p;
             string val;
             cout << "1->Identificacion\n2->Nombre1\n3->Nombre2\n4->Apellido1\n5->Apellido2\n6->Nacimiento\n7->telefono\n8->sexo\n9->RH\n10->Distancia\n";
+            cout<<"> ";
             cin >> count;
             if(count == 1){
               cout << "Indique la ID que desea cambiar: ";
@@ -277,14 +278,14 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
               cout << "Escriba la información que reemplazará el dato: ";
               cin >> val;
               x.set_ident(p, val);
-              
+
             }else if(count == 2){
               cout << "Indique la ID que desea cambiar: ";
               cin >> p;
               cout << "Escriba la información que reemplazará el dato: ";
               cin >> val;
               x.set_nom1(p, val);
-              
+
             }else if(count == 3){
               cout << "Indique la ID que desea cambiar: ";
               cin >> p;
@@ -305,7 +306,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
               cout << "Escriba la información que reemplazará el dato: ";
               cin >> val;
               x.set_apel2(p, val);
-                
+
             }else if(count == 6){
               cout << "Indique la ID que desea cambiar: ";
               cin >> p;
@@ -368,7 +369,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
             rename("datostemp.txt", "datos.txt");
           }
           string gg;
-          cout<<"==================================="<<'\n';
+          cout<<"======================================================================================="<<'\n';
           cout<<"Quiere seguir editando? (si o no):";
           cin>>gg;
           if(gg=="no") t2=false;
@@ -386,7 +387,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
           }
         }
         in1.close();
-        for(int i=0;i<intr.size()-1;i++){
+        for(unsigned int i=0;i<intr.size()-1;i++){
           vector<string> save=split(intr[i]," ");
           bodega.insert(save[0],stoi(save[1]), 1);
         }
@@ -394,7 +395,7 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
         bool t3=true;
         while(t3){
           string info="";
-          cout<<"========================================"<<'\n';
+          cout<<"======================================================================================="<<'\n';
           cout<<"Escriba el tipo de sangre del paciente: ";
           cin>>info;
           vector<string> matchh=match(info);
@@ -407,12 +408,14 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
           if(stoi(ll[1])>bodega.get_blood(ll[0])){
             cout<<"Lo siento! pero hacen falta "<<stoi(ll[1])-bodega.get_blood(ll[0])<<" litros por entregar"<<'\n';
             bodega.insert(ll[0],0, 1);
+            cout<<"======================================================================================="<<'\n';
             cout<<"PILAS!!! se acaba la sangre de tipo "<<ll[0]<<" estas personas podrian donar, contactese"<<'\n';
             x.busqueda(mayusculas(ll[0]));
           }
           else{
             int dif=bodega.get_blood(ll[0])-stoi(ll[1]);
             if(dif<=20){
+              cout<<"======================================================================================="<<'\n';
               cout<<"PILAS!!! Se acaba la sangre de tipo "<<ll[0]<<" estas personas podrian donar, contactese"<<'\n';
               x.busqueda(mayusculas(ll[0]));
             }
@@ -426,26 +429,26 @@ de los tipos de sangre y la cantidad que hay en en el banco.*/
             }
           }
           of.close();
+          cout<<"======================================================================================="<<'\n';
           cout<<"Listo, ya puede reclamar la sangre!!!!"<<'\n';
           string ans2="";
-          cout<<"=============================="<<'\n';
+          cout<<"======================================================================================="<<'\n';
           cout<<"Desea mas sangre? (si o no): ";
           cin>>ans2;
           if(ans2=="no") t3=false;
         }
       }
       if(g==3){
-        bool t=true;
-        while(t){
+        bool t5=true;
+        while(t5){
           x.ver_pacientes();
           string ans1="";
           cout<<"=============================="<<'\n';
           cout<<"Para salir introduzca 3: ";
           cin>>ans1;
-          if(ans1 == "3") t = false;
+          if(ans1 == "3") t5 = false;
         }
       }
-
       if(g==4){
         t=false;
       }
